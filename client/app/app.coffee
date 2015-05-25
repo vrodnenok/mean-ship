@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module 'meanShipApp', [
+app = angular.module 'meanShipApp', [
   'ngCookies',
   'ngResource',
   'ngSanitize',

@@ -1,1 +1,24 @@
-h1 Import of emails will be in this view
+.container-fluid
+  .row
+    .col-sm-5
+      form.inline-form(ng-submit="handleSubmitImportnBtn()", role="form", ng-init="importForm={}")
+        .form-group
+          label(for="email") Emails to import
+          textarea.form-control#email(rows="5", required="reauired", name="email", ng-model="importForm.email")
+        .form-group
+          fieldset
+            label.checkbox-inline(for="is_broker") Broker flag
+            input.checkbox-inline#is_broker(type="checkbox", name="is_broker", ng-model="importForm.is_broker")
+            label.checkbox-inline(for="is_charterer") Charterer flag
+            input.checkbox-inline#is_charterer(type="checkbox", name="is_charterer", ng-model="importForm.is_charterer")
+            label.checkbox-inline(for="is_charterer") Owners flag
+            input.checkbox-inline#is_owners(type="checkbox", name="is_owners", ng-model="importForm.is_owners")
+        .form-group
+          label(for="size") Select tonnage size
+          select.form-control(ng-model="importForm.size")
+            option(ng-repeat="size in sizes", value="{{size._id}}") {{size.name}}    
+        .form-group
+          label(for="region") Select region:  
+          select.form-control(ng-model="importForm.region")
+            option(ng-repeat="region in regions", value="{{region._id}}") {{region.name}}
+        button.btn.btn-primary(type="submit") Start import

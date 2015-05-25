@@ -13,7 +13,8 @@ angular.module 'meanShipApp'
         "mailerViews":
           templateUrl: "app/mailer/new_circular.html"
     .state 'mailer.import',
-      url: '/mailer/import'
+      url: '/import'
       views:
         'mailerViews':
           templateUrl: "app/mailer/import.html"
+          controller: "ImportContactsCtrl"
