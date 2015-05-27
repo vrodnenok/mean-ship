@@ -22,10 +22,19 @@ exports.show = function(req, res) {
 
 // Creates a new contact in the DB.
 exports.create = function(req, res) {
-  Contact.create(req.body, function(err, contact) {
-    if(err) { return handleError(res, err); }
-    return res.json(201, contact);
-  });
+  var contacts = [];
+  var errors = [];
+  var contemp;
+  var conts = req.body.email.split("\n");
+  for(var i = 0; i < conts.length; i++){
+      req.body.email = conts[i];
+      Contact.create(req.body, function(err, contact){
+        if(err) {
+          return handleError(res, err);
+          }
+      });
+    };
+  return res.json(contacts);
 };
 
 // Updates an existing contact in the DB.

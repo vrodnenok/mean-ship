@@ -7,6 +7,9 @@
 
 var Thing = require('../api/thing/thing.model');
 var User = require('../api/user/user.model');
+var Region = require('../api/region/region.model');
+var Kind = require('../api/kind/kind.model');
+var Account = require('../api/account/account.model');
 
 Thing.find({}).remove(function() {
   Thing.create({
@@ -46,4 +49,71 @@ User.find({}).remove(function() {
       console.log('finished populating users');
     }
   );
+});
+
+Account.find({}).remove(function() {
+  Account.create({
+    provider: 'vrodnenok.in.ua',
+    username: 'chart@vrodnenok.in.ua',
+    email: 'chart@vrodnenok.in.ua',
+    smtp: 'smtp.gmail.com',
+    password: '8102977aa'
+  }, {
+    provider: 'Gmail',
+    username: 'charter759@gmail.com',
+    smtp: '194.0.200.218',
+    email: 'charter759@gmail.com',
+    password: '5875745aa!'
+  }, function() {
+      console.log('finished populating accounts');
+    }
+  );
+});
+
+Kind.find({}).remove(function(){
+  Kind.create(
+    {
+      name: 'Dry/bulk'
+    },
+    {
+      name: 'Tanker'
+    },
+    {
+      name: 'MPP'
+    },
+    {
+      name: 'Heavy-lift'
+    },
+    {
+      name: 'Dry/river'
+    }
+  );
+});
+
+Region.find({}).remove(function() {
+  Region.create(
+  {
+    name: "Russia"
+  },
+  {
+    name: "North Europe"
+  },
+  {
+    name: "Greece"
+  },
+  {
+    name: "Med"
+  },
+  {
+    name: "Turkey"
+  },
+  {
+    name: "Asia"
+  },
+  {
+    name: "Africa"
+  },
+  {
+    name: "Black sea"
+  });
 });

@@ -6,17 +6,20 @@
           label(for="email") Emails to import
           textarea.form-control#email(rows="5", required="reauired", name="email", ng-model="importForm.email")
         .form-group
-          fieldset
-            label.checkbox-inline(for="is_broker") Broker flag
-            input.checkbox-inline#is_broker(type="checkbox", name="is_broker", ng-model="importForm.is_broker")
-            label.checkbox-inline(for="is_charterer") Charterer flag
-            input.checkbox-inline#is_charterer(type="checkbox", name="is_charterer", ng-model="importForm.is_charterer")
-            label.checkbox-inline(for="is_charterer") Owners flag
-            input.checkbox-inline#is_owners(type="checkbox", name="is_owners", ng-model="importForm.is_owners")
+          label(for="tonnage") Min tonnage operated
+          input.form-control#tonnage(name="tonnage", ng-model="circularForm.tonnage")          
         .form-group
-          label(for="size") Select tonnage size
-          select.form-control(ng-model="importForm.size")
-            option(ng-repeat="size in sizes", value="{{size._id}}") {{size.name}}    
+          fieldset
+            label.checkbox-inline(for="isBroker") Broker flag
+            input.checkbox-inline#isBroker(type="checkbox", name="isBroker", ng-model="importForm.isBroker")
+            label.checkbox-inline(for="is_charterer") Charterer flag
+            input.checkbox-inline#isCharterer(type="checkbox", name="isCharterer", ng-model="importForm.isCharterer")
+            label.checkbox-inline(for="isCharterer") Owners flag
+            input.checkbox-inline#isOwner(type="checkbox", name="isOwner", ng-model="importForm.isOwner")
+        .form-group
+          label(for="kind") Select tonnage kind
+          select.form-control(ng-model="importForm.kind")
+            option(ng-repeat="kind in kinds", value="{{kind._id}}") {{kind.name}}    
         .form-group
           label(for="region") Select region:  
           select.form-control(ng-model="importForm.region")

@@ -1,11 +1,16 @@
 'use strict'
 
 angular.module 'meanShipApp'
-.controller 'ImportContactsCtrl', ($scope, $http) ->
+.controller 'ImportContactsCtrl', ($scope, $http, $location) ->
   $http.get("/api/regions").success (regions) ->
     $scope.regions = regions
     console.log $scope.regions.length
-  $http.get("/api/sizes").success (sizes) ->
-    $scope.sizes = sizes
+  $http.get("/api/kinds").success (kinds) ->
+    $scope.kinds = kinds
   $scope.handleSubmitImportnBtn = () ->
-    console.log($scope.importForm)
+    $http.post("/api/contacts", $scope.importForm)
+    .success (data) ->
+      console.log data
+      $scope.importForm = {}
+    .error (data) ->
+      console.log(data)

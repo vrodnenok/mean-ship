@@ -1,53 +1,53 @@
 'use strict';
 
 var _ = require('lodash');
-var Size = require('./size.model');
+var Kind = require('./kind.model');
 
-// Get list of sizes
+// Get list of kinds
 exports.index = function(req, res) {
-  Size.find(function (err, sizes) {
+  Kind.find(function (err, kinds) {
     if(err) { return handleError(res, err); }
-    return res.json(200, sizes);
+    return res.json(200, kinds);
   });
 };
 
-// Get a single size
+// Get a single kind
 exports.show = function(req, res) {
-  Size.findById(req.params.id, function (err, size) {
+  Kind.findById(req.params.id, function (err, kind) {
     if(err) { return handleError(res, err); }
-    if(!size) { return res.send(404); }
-    return res.json(size);
+    if(!kind) { return res.send(404); }
+    return res.json(kind);
   });
 };
 
-// Creates a new size in the DB.
+// Creates a new kind in the DB.
 exports.create = function(req, res) {
-  Size.create(req.body, function(err, size) {
+  Kind.create(req.body, function(err, kind) {
     if(err) { return handleError(res, err); }
-    return res.json(201, size);
+    return res.json(201, kind);
   });
 };
 
-// Updates an existing size in the DB.
+// Updates an existing kind in the DB.
 exports.update = function(req, res) {
   if(req.body._id) { delete req.body._id; }
-  Size.findById(req.params.id, function (err, size) {
+  Kind.findById(req.params.id, function (err, kind) {
     if (err) { return handleError(res, err); }
-    if(!size) { return res.send(404); }
-    var updated = _.merge(size, req.body);
+    if(!kind) { return res.send(404); }
+    var updated = _.merge(kind, req.body);
     updated.save(function (err) {
       if (err) { return handleError(res, err); }
-      return res.json(200, size);
+      return res.json(200, kind);
     });
   });
 };
 
-// Deletes a size from the DB.
+// Deletes a kind from the DB.
 exports.destroy = function(req, res) {
-  Size.findById(req.params.id, function (err, size) {
+  Kind.findById(req.params.id, function (err, kind) {
     if(err) { return handleError(res, err); }
-    if(!size) { return res.send(404); }
-    size.remove(function(err) {
+    if(!kind) { return res.send(404); }
+    kind.remove(function(err) {
       if(err) { return handleError(res, err); }
       return res.send(204);
     });

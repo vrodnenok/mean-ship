@@ -1,0 +1,15 @@
+.container-fluid
+  table.table.table-bordered
+    tr
+      th Subject
+      th Sent at
+      th Edits
+      th Views
+    tr(ng-repeat="circular in circulars")
+      td 
+        a(ng-href="/mailer/edit_circular/{{circular._id}}") {{circular.subj}}
+      td {{circular.createdAt}}
+      td
+        button Edit
+      td
+        button View

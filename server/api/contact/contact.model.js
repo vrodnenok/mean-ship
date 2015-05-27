@@ -15,6 +15,10 @@ var ContactSchema = new Schema({
   phone: String,
   phoneMob: String,
   company: String,
+  tonnage: {
+    type: Number,
+    default: 5000
+  },
   isBroker: {
     type: Boolean,
     default: false
@@ -27,7 +31,7 @@ var ContactSchema = new Schema({
     type: Boolean,
     default: false
     },
-  size: {type: Schema.ObjectId, ref: "Size"},
+  kind: {type: Schema.ObjectId, ref: "Kind"},
   region: {type: Schema.ObjectId, ref: "Region"},
   comment: String,
   active: {

@@ -4,21 +4,21 @@
 
 'use strict';
 
-var Size = require('./size.model');
+var Account = require('./account.model');
 
 exports.register = function(socket) {
-  Size.schema.post('save', function (doc) {
+  Account.schema.post('save', function (doc) {
     onSave(socket, doc);
   });
-  Size.schema.post('remove', function (doc) {
+  Account.schema.post('remove', function (doc) {
     onRemove(socket, doc);
   });
 }
 
 function onSave(socket, doc, cb) {
-  socket.emit('size:save', doc);
+  socket.emit('account:save', doc);
 }
 
 function onRemove(socket, doc, cb) {
-  socket.emit('size:remove', doc);
+  socket.emit('account:remove', doc);
 }
