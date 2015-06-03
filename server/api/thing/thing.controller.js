@@ -14,7 +14,7 @@ var Thing = require('./thing.model');
 
 // Get list of things
 exports.index = function(req, res) {
-  Thing.find(function (err, things) {
+  Thing.find({}).sort('active').exec(function (err, things) {
     if(err) { return handleError(res, err); }
     return res.json(200, things);
   });
@@ -40,6 +40,7 @@ exports.create = function(req, res) {
 // Updates an existing thing in the DB.
 exports.update = function(req, res) {
   if(req.body._id) { delete req.body._id; }
+  var thing = req.body;
   Thing.findById(req.params.id, function (err, thing) {
     if (err) { return handleError(res, err); }
     if(!thing) { return res.send(404); }

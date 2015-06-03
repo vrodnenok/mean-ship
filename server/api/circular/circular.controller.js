@@ -5,50 +5,61 @@ var Circular = require('./circular.model');
 
 var Contact = require('../contact/contact.model');
 var Account = require('../account/account.model');
-var email = require('emailjs');
+var mailgun = require('mailgun-js')({
+    apiKey: 'key-e9c756c3c7b6015cbe04871d2aff2bf7',
+    domain: 'vrodnenok.in.ua'
+  });
+
+var contactsToSend = [];
+
+// Get list of circulars
+exports.filter = function(req, res) {
+  console.log(req.body);
+  if (req.body.filter === "") return;
+  var query = "//"+req.body.filter+"//";
+  Circular.find({subj: new RegExp(req.body.filter, "i")}).sort('-updatedAt').limit(100).exec(function (err, circulars) {
+    if(err) { return handleError(res, err); }
+    return res.json(200, circulars);
+  });
+};
 
 // sends circular to selected email group
-
 function sendMail(req, res){
-  Contact.find(function(err, contacts){
-    var acc;
-    if(err) { return handleError(res, err)}
-    if(req.body.account){
-      Account.findById(req.body.accout, function(err, account){
-        acc = account;
-      });
+
+  Contact.find().skip(197).exec(function(err, contacts){
+
+    var sendMailIterator = function(i){
+      if (i<contacts.length){
+        mOptions.to=contacts[i].email;
+        mailgun.messages().send(mOptions, function(error, info){
+        if(error) {console.log("there was an error" + error);}
+        console.log("sending to ... " + mOptions.to);
+        console.log(info);
+        sendMailIterator(i+1);
+        }
+        );
+        }
+      return;
     }
-    var server = email.server.connect({
-        user: "chart@vrodnenok.in.ua",
-        password: "8102977aa",
-        host: "194.0.200.218",
-        ssl: false
-    });
-    var mailOptions = {
+
+    var mOptions = {
       from: "Victor Rodnenok <chart@vrodnenok.in.ua>",
-      to: "",
+      to: "Victor Rodnenok <chart@vrodnenok.in.ua>",
       subject: req.body.subj,
       text: req.body.text,
-      attachment:
-      {
-        data: req.body.html,
-        alternative:true
-      }
+      html: req.body.html
     }
-    for(var i=0; i < contacts.length; i++){
-      mailOptions.to = contacts[i].email;
-      server.send(mailOptions, function(error, info){
-        if(error) {return res.json("there was an error" + error);}
-      });
-    }
-    return;
+
+    if(err) { return handleError(res, err);}
+    sendMailIterator(0);
   });
 };
 
 
 // Get list of circulars
 exports.index = function(req, res) {
-  Circular.find(function (err, circulars) {
+  console.log(req.body);
+  Circular.find({}).sort('-updatedAt').limit(10).exec(function (err, circulars) {
     if(err) { return handleError(res, err); }
     return res.json(200, circulars);
   });
@@ -68,9 +79,9 @@ exports.create = function(req, res) {
   req.body._id = null;
   Circular.create(req.body, function(err, circular) {
     if(err) { return handleError(res, err); }
-    sendMail (req, res);
     return res.json(201, circular);
   });
+  sendMail (req, res);
 };
 
 // Updates an existing circular in the DB.

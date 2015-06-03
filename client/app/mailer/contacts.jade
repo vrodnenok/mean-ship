@@ -1,0 +1,40 @@
+.container-fluid
+  label.inline Find contact by email:
+  input.inline.form-control(ng-change="findContacts(contactsFilter)", ng-model="contactsFilter")
+  br
+  br
+  table.table.table-bordered
+    tr
+      th Name
+      th Company 
+      th Email
+      th Broker
+      th Charterer
+      th Owner
+      th Active
+      th Region
+      th Update
+      th Edit
+      th Delete
+    tr(ng-repeat="contact in contacts")
+      td 
+        input.form-control(ng-model="contact.name")
+      td
+        input.form-control(ng-model="contact.company")
+      td
+        input.form-control(ng-model="contact.email")
+      td
+        input.form-control(ng-model="contact.isBroker", type="checkbox")
+      td
+        input.form-control(ng-model="contact.isCharterer", type="checkbox")
+      td
+        input.form-control(ng-model="contact.isOwner", type="checkbox")
+      td
+        input.form-control(ng-model="contact.active", type="checkbox")
+      td {{contact.region.name}}
+      td
+        button.btn(ng-click="updateContact(contact)") Update
+      td
+        a.btn.btn-primary(ng-href="/edit_contact/{{contact._id}}") Edit
+      td
+        button.btn.btn-warning(ng-click="deleteContact(contact)", onclick="return confirm('are you sure?');") Del

@@ -31,8 +31,16 @@ var ContactSchema = new Schema({
     type: Boolean,
     default: false
     },
-  kind: {type: Schema.ObjectId, ref: "Kind"},
-  region: {type: Schema.ObjectId, ref: "Region"},
+  isFiltered: {
+    type: Boolean,
+    default: false
+    },
+  prefAccount: {
+    type: String,
+    default: 'mg'
+    },
+  kind: {type: Schema.Types.ObjectId, ref: "Kind"},
+  region: {type: Schema.Types.ObjectId, ref: "Region"},
   comment: String,
   active: {
     type: Boolean,
