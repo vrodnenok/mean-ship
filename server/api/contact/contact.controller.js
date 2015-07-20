@@ -3,10 +3,12 @@
 var _ = require('lodash');
 var Contact = require('./contact.model');
 
+var async = require('async');
+
 var validator = require('mailgun-email-validation');
 
 exports.filter = function(req, res) {
-  Contact.find({email: new RegExp(req.body.filter)}).limit(50).exec(function (err, contacts) {
+  Contact.find({email: new RegExp(req.body.filter.toLowerCase())}).populate('region').limit(25).exec(function (err, contacts) {
     if(err) { return handleError(res, err); }
     return res.json(200, contacts);
   });
@@ -14,7 +16,7 @@ exports.filter = function(req, res) {
 
 // Get list of contacts
 exports.index = function(req, res) {
-  Contact.find().limit(250).populate('region','name').exec(function (err, contacts) {
+  Contact.find().limit(10).populate('region','name').exec(function (err, contacts) {
     if(err) { return handleError(res, err); }
     console.log(contacts);
     return res.json(200, contacts);
@@ -34,9 +36,10 @@ exports.show = function(req, res) {
 exports.create = function(req, res) {
   var inserter = function(index){
     if (index < validatedConts.length){
-          req.body.email = validatedConts[index++];
-          if (/gmail/.test(req.body.email)){ req.body.prefAccount = 'gmail'};
-          Contact.create(req.body, function(err, contact){
+      var contactTemp = _.cloneDeep(req.body);
+          contactTemp.email = validatedConts[index];
+          if ( validatedConts[index].indexOf("gmail") > -1 ){ contactTemp.prefAccount = 'gmail'}
+          Contact.create(contactTemp, function(err, contact){
             if(err) {
                console.log(err);
              } else {
@@ -61,48 +64,45 @@ exports.create = function(req, res) {
   }
 
 
-  function mvalidator (index){
-    console.log("In the begining Index = " + index);
-    if (index < conts.length){
-      validator.check(conts[index].trim(), function(err, valid){
-          console.log("is '" + conts[index] + "' valid? " + valid);
+  function mvalidator (contact, cbDone){
+    console.log("In the begining Index = ");
+      validator.check(contact.trim(), function(err, valid){
+          console.log("is '" + contact + "' valid? " + valid);
             if(err) {
                console.log(err);
              } else {
                if (valid){
-              validatedConts.push(conts[index]);
+              validatedConts.push(contact);
             } else {
-              errors.push(conts[index]);
+              errors.push(contact);
             }
             }
-            console.log("Index =" + index);
-            mvalidator(index + 1);
+          cbDone(null);
         });
-    } else {
-      console.log ('done with validation...');
-      console.log("Invalid emails:");
-      console.log(errors);
-      return validatorFinish();
     }
-  };
 
   var contacts = [];
   var errors = [];
   var contemp;
   var conts = req.body.email.split("\n");
   var validatedConts = [];
-  mvalidator(0);
+  async.forEachLimit(conts, 15, mvalidator, function(err){
+    console.log(validatedConts);
+    inserter(0);
+  });
 };
 
 // Updates an existing contact in the DB.
 exports.update = function(req, res) {
   if(req.body._id) { delete req.body._id; }
   Contact.findById(req.params.id, function (err, contact) {
+    console.log(contact);
     if (err) { return handleError(res, err); }
     if(!contact) { return res.send(404); }
     var updated = _.merge(contact, req.body);
+    console.log(updated);
     updated.save(function (err) {
-      if (err) { return handleError(res, err); }
+      if (err) { console.log(err); }
       return res.json(200, contact);
     });
   });

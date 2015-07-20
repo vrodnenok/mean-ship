@@ -3,8 +3,8 @@
 describe 'Controller: MainCtrl', ->
 
   # load the controller's module
-  beforeEach module 'meanShipApp' 
-  beforeEach module 'socketMock' 
+  beforeEach module 'meanShipApp'
+  beforeEach module 'socketMock'
 
   MainCtrl = undefined
   scope = undefined

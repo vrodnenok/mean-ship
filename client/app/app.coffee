@@ -4,11 +4,13 @@ app = angular.module 'meanShipApp', [
   'ngCookies',
   'ngResource',
   'ngSanitize',
+  'ngMaterial',
   'btford.socket-io',
   'ui.router',
   'ui.bootstrap'
 ]
 .config ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) ->
+
   $urlRouterProvider
   .otherwise '/'
 

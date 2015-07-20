@@ -1,17 +1,18 @@
-.container-fluid
-  label.inline Find circular: 
-  input(ng-change="findCircular(circularFilter)", ng-model="circularFilter")
-  table.table.table-bordered
-    tr
-      th Subject
-      th Sent 
-      th Edits
-      th Views
-    tr(ng-repeat="circular in circulars")
-      td 
-        a(ng-href="/mailer/edit_circular/{{circular._id}}") {{circular.subj}}
-      td {{circular.updatedAt}}
-      td
-        button Edit
-      td
-        button View
+.col-lg-10
+  md-input-container
+    label Find circular: 
+    input.md-whiteframe-z2(aria-label="contactFilter", ng-change="findCircular(circularFilter)", ng-model="circularFilter")
+table.md-table
+  tr
+    th Subject
+    th Sent 
+    th Edits
+    th Views
+  tr(ng-repeat="circular in circulars")
+    td 
+      a(ng-href="/mailer/edit_circular/{{circular._id}}") {{circular.subj}}
+    td {{circular.updatedAt}}
+    td
+      button Edit
+    td
+      button View

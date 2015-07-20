@@ -1,43 +1,41 @@
-.container-fluid
-  .row
-    .col-sm-5
-      form.inline-form(ng-submit="handleSubmitCircularBtn()", role="form", ng-init="circularForm={}")
-        .form-group
-          label(for="text") Text 
-          textarea.form-control#text(rows="5", required="reauired", name="text", ng-model="circularForm.text")
-        .form-group
-          label(for="html") Html 
-          textarea.form-control#html(rows="5", required="reauired", name="html", ng-model="circularForm.html")
-        .form-group
-          label(for="subj") Subject
-          input.form-control#subj(required="required", name="subj", ng-model="circularForm.subj")
-        .form-group
-          label(for="tonnage") Min tonnage
-          input.form-control#subj(name="tonnage", ng-model="circularForm.tonnage")
-        .form-group
-          .panel.panel-default
-            label.checkbox-inline(for="toBrokers") Broker flag
-            input.checkbox-inline#toBrokers(type="checkbox", name="toBrokers", ng-model="circularForm.toBrokers")
-            label.checkbox-inline(for="toCharterers") Charterer flag
-            input.checkbox-inline#toCharterers(type="checkbox", name="toCharterers", ng-model="circularForm.toCharterers")
-            label.checkbox-inline(for="toOwners") Owners flag
-            input.checkbox-inline#isOwner(type="checkbox", name="toOwners", ng-model="circularForm.toOwners")
-        .form-group
-          label(for="account") Select SMTP account
-          select.form-control(ng-model="circularForm.account")
-            option(ng-repeat="account in accounts", value="{{account._id}}") {{account.provider}} 
-        .form-group
-          label(for="kind") Select tonnage type
-          select.form-control(ng-model="circularForm.kind")
-            option(ng-repeat="kind in kinds", value="{{kind._id}}") {{kind.name}}    
-        .form-group
-          label(for="region") Select region:  
-          select.form-control(ng-model="circularForm.region")
-            option(ng-repeat="region in regions", value="{{region._id}}") {{region.name}}
-        button.btn.btn-primary(type="submit") Send circular
-    .col-md-7
-      label(for="preview") Html preview
+.col-md-4
+  form.inline-form(ng-submit="handleSubmitCircularBtn()", role="form", ng-init="circularForm={}")
+    .form-group
+      label(for="text") Text 
+      textarea.form-control#text(rows="5", required="reauired", name="text", ng-model="circularForm.text")
+    .form-group
+      label(for="html") Html 
+      textarea.form-control#html(rows="5", required="reauired", name="html", ng-model="circularForm.html")
+    .form-group
+      label(for="subj") Subject
+      input.form-control#subj(required="required", name="subj", ng-model="circularForm.subj")
+    .form-group
+      label(for="tonnage") Min tonnage
+      input.form-control#subj(name="tonnage", ng-model="circularForm.tonnage")
+  
+    button.btn.btn-primary(type="submit") Send circular
+.col-md-5
+  label(for="preview") Html preview
+  .panel.panel-default
+    .panel-body 
+      div#preview(ng-bind-html="circularForm.html")
+  .form-group
       .panel.panel-default
-        .panel-body 
-          div#preview(ng-bind-html="circularForm.html")
-        
+        label.checkbox-inline(for="toBrokers") Broker flag
+        input.checkbox-inline#toBrokers(type="checkbox", name="toBrokers", ng-model="circularForm.toBrokers")
+        label.checkbox-inline(for="toCharterers") Charterer flag
+        input.checkbox-inline#toCharterers(type="checkbox", name="toCharterers", ng-model="circularForm.toCharterers")
+        label.checkbox-inline(for="toOwners") Owners flag
+        input.checkbox-inline#isOwner(type="checkbox", name="toOwners", ng-model="circularForm.toOwners")
+    .form-group
+      label(for="account") Select SMTP account
+      select.form-control(ng-model="circularForm.account")
+        option(ng-repeat="account in accounts", value="{{account._id}}") {{account.provider}} 
+    .form-group
+      label(for="kind") Select tonnage type
+      select.form-control(ng-model="circularForm.kind")
+        option(ng-repeat="kind in kinds", value="{{kind._id}}") {{kind.name}}    
+    .form-group
+      label(for="region") Select region:  
+      select.form-control(ng-model="circularForm.region")
+        option(ng-repeat="region in regions", value="{{region._id}}") {{region.name}}

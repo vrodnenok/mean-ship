@@ -1,6 +1,5 @@
 div(ng-include='"components/navbar/navbar.html"')
-div(ng-include='"components/mailer_sidebar/sidebar.html"')
-.container-fluid
-  .col-md-offset-2
-    p Here goes main Mailer view
-    div(ui-view="mailerViews")
+#sidebar
+  div.sidebar-fixed(ng-include='"components/mailer_sidebar/sidebar.html"')
+ng-cloak
+  #contacts(ui-view="mailerViews")

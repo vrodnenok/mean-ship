@@ -1,40 +1,41 @@
-.container-fluid
-  label.inline Find contact by email:
-  input.inline.form-control(ng-change="findContacts(contactsFilter)", ng-model="contactsFilter")
-  br
-  br
-  table.table.table-bordered
-    tr
-      th Name
-      th Company 
-      th Email
-      th Broker
-      th Charterer
-      th Owner
-      th Active
-      th Region
-      th Update
-      th Edit
-      th Delete
-    tr(ng-repeat="contact in contacts")
-      td 
-        input.form-control(ng-model="contact.name")
+.col-md-4
+  md-input-container
+    label Find contact by email:
+    input.md-whiteframe-z2(aria-label="contactFilter", ng-change="findContacts(contactsFilter)", ng-model="contactsFilter")
+br
+br
+table.md-table
+  tbody
+    tr(ng-repeat="contact in contacts track by contact._id")
       td
-        input.form-control(ng-model="contact.company")
+        md-input-container
+          input(ng-model="contact.name", aria-label="ContactName")
       td
-        input.form-control(ng-model="contact.email")
+        md-input-container
+          input(ng-model="contact.email", aria-label="ContactEmail")
       td
-        input.form-control(ng-model="contact.isBroker", type="checkbox")
+        md-input-container
+          md-checkbox.md-primary(aria-label="Broker", ng-model="contact.isBroker")
       td
-        input.form-control(ng-model="contact.isCharterer", type="checkbox")
+        md-input-container
+          md-checkbox.md-primary(aria-label="Charterer", ng-model="contact.isCharterer")
       td
-        input.form-control(ng-model="contact.isOwner", type="checkbox")
+        md-input-container
+          md-checkbox.md-primary(aria-label="Owner", ng-model="contact.isOwner")
       td
-        input.form-control(ng-model="contact.active", type="checkbox")
-      td {{contact.region.name}}
+        md-input-container
+          md-checkbox.md-primary(aria-label="Active", ng-model="contact.active")
       td
-        button.btn(ng-click="updateContact(contact)") Update
+        md-input-container
+          md-select(aria-label="ContactRegion", ng-model="contact.region.name")
+            md-option(ng-repeat="region in regions") {{region.name}}
       td
-        a.btn.btn-primary(ng-href="/edit_contact/{{contact._id}}") Edit
+        md-input-container
+          md-select(ng-model="contact.prefAccount", aria-label="ContactEmail", style="{width:4px}")
+            md-option(ng-repeat="acc in accs") {{acc}}
       td
-        button.btn.btn-warning(ng-click="deleteContact(contact)", onclick="return confirm('are you sure?');") Del
+        md-button(ng-click="updateContact(contact)") Upd
+      td
+        md-button(ng-href="/mailer/edit_contact/{{contact._id}}") Edit
+      td
+        md-button(ng-click="showDeleteContactDialog(contact)") Del

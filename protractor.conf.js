@@ -48,6 +48,8 @@ exports.config = {
     defaultTimeoutInterval: 30000
   },
 
+  chromeDriver: 'node_modules/protractor/selenium/chromedriver',
+
   onPrepare: function() {
     global.By = global.by;
   }

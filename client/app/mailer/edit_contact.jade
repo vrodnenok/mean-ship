@@ -1,0 +1,26 @@
+form(ng-submit="handleSubmitContactBtn()" role="form" ng-init="contactForm={}")
+  div(layout="row")
+    md-input-container(style="width:295px")
+      label(type="email" for="email") Email
+      input.long#email(rows="5" required="reauired" name="email" ng-model="contactForm.email")
+    md-input-container
+      label(for="tonnage") Min tonnage operated
+      input#tonnage(name="tonnage", ng-model="contactForm.tonnage")          
+    md-select(placeholder="Preferred account" ng-model="contact.prefAccount" value="{{contactForm.prefAccount}}")
+      md-option(ng-repeat="acc in accs") {{acc}}
+  fieldset.standard
+    div(layout="row")
+      md-checkbox.md-primary#isBroker(type="checkbox", name="isBroker", ng-model="contactForm.isBroker")
+        | Broker flag: {{contactForm.isBroker}}
+      md-checkbox.md-primary#isCharterer(type="checkbox", name="isCharterer", ng-model="contactForm.isCharterer")
+        | Charterer flag
+      md-checkbox.md-primary#isOwner(type="checkbox", name="isOwner", ng-model="contactForm.isOwner")
+        | Owners flag
+  div(layout="row")
+    md-select(placeholder="Select tonnage kind" ng-model="contactForm.kind" style="width: 250px; oversize: scroll")
+      md-optgroup(label="Vessels type:")
+        md-option(ng-repeat="kind in kinds" value="{{kind._id}}" style="width: 250px") {{kind.name}}    
+    md-select(placeholder="Select region" ng-model="contactForm.region" style="width: 250px")
+      md-optgroup(label="Contacts region:")
+        md-option(ng-repeat="region in regions" value="{{region._id}}" style="width: 250px") {{region.name}}
+  button.btn.btn-primary(type="submit") Start contact

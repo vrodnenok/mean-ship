@@ -1,13 +1,8 @@
 div(ng-include='"components/navbar/navbar.html"')
-
-header#banner.hero-unit
-  .container
-    h1 'Allo, 'Allo!
-    p.lead Kick-start your next web app with Angular Fullstack
-
-.container(ng-show="isLoggedIn()")
+.container-fluid(ng-show="isLoggedIn()")
   .row
-    .col-lg-12
+    .col-lg-2
+    .col-lg-8
       h1.page-header Features:
       ul.list-group(ng-repeat='thing in awesomeThings')
         li.list-group-item(disabled="true")
@@ -17,7 +12,7 @@ header#banner.hero-unit
             input.pull-right(type="checkbox", ng-change='toggleThing(thing)', ng-model="thing.active", value='true')
             span.glyphicon.glyphicon-trash.pull-right(ng-show="isAdmin()", ng-click='deleteThing(thing)')
             a.pull-right(href='#', tooltip="")
-            |.pull-right Added on {{thing.createdAt}}
+            | Added on {{thing.createdAt}}
           del(ng-if="thing.active")
             a(href='#', tooltip='{{thing.info}}')
             | {{thing.name}} + Added on {{Date.parse(thing.createdAt)}}
@@ -25,12 +20,12 @@ header#banner.hero-unit
             span.glyphicon.glyphicon-trash.pull-right(ng-show="isAdmin()", ng-click='deleteThing(thing)')
             
         
-  form.thing-form
-    label Syncs in realtime across clients
-    p.input-group
-      input.form-control(type='text', placeholder='Add a new thing here.', ng-model='newThing', checked="{{thing.active}}")
-      span.input-group-btn
-        button.btn.btn-primary(type='submit', ng-click='addThing()') Add New
+      form.thing-form
+        label Syncs in realtime across clients
+        p.input-group
+          input.form-control(type='text', placeholder='Add a new thing here.', ng-model='newThing', checked="{{thing.active}}")
+          span.input-group-btn
+            button.btn.btn-primary(type='submit', ng-click='addThing()') Add New
 
 footer.footer
   .container

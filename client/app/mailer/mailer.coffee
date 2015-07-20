@@ -25,6 +25,12 @@ angular.module 'meanShipApp'
         'mailerViews':
           templateUrl: "app/mailer/circulars.html"
           controller: "CircularsCtrl"
+    .state 'mailer.edit_contact',
+      url: '/edit_contact/:id'
+      views:
+        'mailerViews':
+          templateUrl: "app/mailer/edit_contact.html"
+          controller: 'EditContactCtrl'
     .state 'mailer.edit_circular',
       url: '/edit_circular/:id'
       views:

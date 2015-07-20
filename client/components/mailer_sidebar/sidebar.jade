@@ -1,10 +1,11 @@
-.col-md-2
-  ul.nav.nav-pills.nav-stacked
-    li
-      a(ui-sref='mailer.circulars') Sent circulars
-    li
-      a(ui-sref='mailer.import') Import contacts
-    li
-      a(ui-sref='mailer.new_circular') New cercular
-    li
-      a(ui-sref='mailer.contacts') Contacts
+div(layout="column")
+  .well
+    md-list
+      md-list-item
+        md-button(ui-sref='mailer.circulars') Sent circulars
+      md-list-item
+        md-button(ui-sref='mailer.import') Import contacts
+      md-list-item
+        md-button(ui-sref='mailer.new_circular') New cercular
+      md-list-item
+        md-button(ui-sref='mailer.contacts') Contacts

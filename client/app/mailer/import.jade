@@ -7,7 +7,10 @@
           textarea.form-control#email(rows="5", required="reauired", name="email", ng-model="importForm.email")
         .form-group
           label(for="tonnage") Min tonnage operated
-          input.form-control#tonnage(name="tonnage", ng-model="circularForm.tonnage")          
+          input.form-control#tonnage(name="tonnage", ng-model="importForm.tonnage")          
+        .form-group
+          label(for="prefAccount") Preferred account:
+          input.form-control#prefAccount(name="prefAccount", ng-model="importForm.prefAccount")          
         .form-group
           fieldset
             label.checkbox-inline(for="isBroker") Broker flag
@@ -25,3 +28,5 @@
           select.form-control(ng-model="importForm.region")
             option(ng-repeat="region in regions", value="{{region._id}}") {{region.name}}
         button.btn.btn-primary(type="submit") Start import
+      br
+      button.btn.btn-primary(ng-click="handleSetDefaultsButton()") Set defaults
